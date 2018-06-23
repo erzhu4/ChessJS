@@ -325,7 +325,7 @@ var Piece = function () {
 				return false;
 			}
 
-			if (JSON.stringify(this.validMoves()).indexOf(JSON.stringify(location))) {
+			if (JSON.stringify(this.validMoves()).indexOf(JSON.stringify(location)) != -1) {
 				this.board.grid[location[0]][location[1]] = this;
 				this.board.grid[this.pos[0]][this.pos[1]] = null;
 				this.pos[0] = location[0];
@@ -983,7 +983,8 @@ var ChessComponent = function (_React$Component) {
 		var styles = new _chessStyles2.default({ dimension: 400 }).getStyles();
 		_this.state = {
 			styles: styles,
-			board: new _board2.default()
+			board: new _board2.default(),
+			selectedPiece: null
 		};
 		return _this;
 	}
@@ -1006,11 +1007,32 @@ var ChessComponent = function (_React$Component) {
 
 					return _react2.default.createElement(
 						'div',
-						{ key: ridx + "derp" + cidx, style: _this2.state.styles.block, row: ridx, col: cidx },
+						{ key: ridx + "derp" + cidx, style: _this2.state.styles.block, row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2) },
 						element
 					);
 				});
 			});
+		}
+	}, {
+		key: 'blockClick',
+		value: function blockClick(event) {
+			var row = parseInt(event.currentTarget.getAttribute("row"));
+			var col = parseInt(event.currentTarget.getAttribute("col"));
+
+			if (!this.state.selectedPiece) {
+				this.setState({
+					selectedPiece: this.state.board.grid[row][col]
+				});
+			} else {
+				//moved successfully
+				if (this.state.selectedPiece.move([row, col])) {
+					this.setState({
+						selectedPiece: null
+					});
+				} else {
+					alert("move is illegal");
+				}
+			}
 		}
 	}, {
 		key: 'render',
@@ -8480,8 +8502,11 @@ var Pawn = function (_Piece) {
 	}, {
 		key: "move",
 		value: function move(location) {
-			_get(Pawn.prototype.__proto__ || Object.getPrototypeOf(Pawn.prototype), "move", this).call(this, location);
-			this.firstMove = false;
+			var result = _get(Pawn.prototype.__proto__ || Object.getPrototypeOf(Pawn.prototype), "move", this).call(this, location);
+			if (result) {
+				this.firstMove = false;
+			}
+			return result;
 		}
 	}]);
 

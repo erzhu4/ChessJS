@@ -12,7 +12,8 @@ class ChessComponent extends React.Component {
 		var styles = new ChessStyles({dimension: 400}).getStyles();
 		this.state = {
 			styles: styles,
-			board: new ChessBoard()
+			board: new ChessBoard(),
+			selectedPiece: null
 		}
 	}
 
@@ -21,16 +22,40 @@ class ChessComponent extends React.Component {
 			return row.map((col, cidx) => {
 				let element = null;
 				if (this.state.board.grid[ridx][cidx]){
-					element = <div style={{color:'red'}}>{this.state.board.grid[ridx][cidx].name}</div>
+					element = (
+						<div style={{color:'red'}}>
+							{this.state.board.grid[ridx][cidx].name}
+						</div>
+					);
 				}
 
 				return (
-					<div key={ridx + "derp" + cidx} style={this.state.styles.block} row={ridx} col={cidx}>
+					<div key={ridx + "derp" + cidx} style={this.state.styles.block} row={ridx} col={cidx} onClick={this.blockClick.bind(this)}>
 						{element}
 					</div>
 				);
 			});
 		});
+	}
+
+	blockClick(event){
+		let row = parseInt(event.currentTarget.getAttribute("row"));
+		let col = parseInt(event.currentTarget.getAttribute("col"));
+
+		if (!this.state.selectedPiece){
+			this.setState({
+				selectedPiece: this.state.board.grid[row][col]
+			});
+		} else {
+			//moved successfully
+			if (this.state.selectedPiece.move([row, col])){
+				this.setState({
+					selectedPiece: null
+				});
+			} else {
+				alert("move is illegal");
+			}
+		}
 	}
 
 	render(){

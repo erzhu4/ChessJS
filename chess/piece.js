@@ -50,7 +50,7 @@ export default class Piece {
 			return false;
 		}
 
-		if (JSON.stringify(this.validMoves()).indexOf(JSON.stringify(location))){
+		if (JSON.stringify(this.validMoves()).indexOf(JSON.stringify(location)) != -1){
 			this.board.grid[location[0]][location[1]] = this;
 			this.board.grid[this.pos[0]][this.pos[1]] = null;
 			this.pos[0] = location[0];

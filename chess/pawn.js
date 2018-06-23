@@ -39,8 +39,11 @@ export default class Pawn extends Piece {
 	}
 
 	move(location){
-		super.move(location);
-		this.firstMove = false;
+		var result = super.move(location);
+		if (result){
+			this.firstMove = false;
+		}
+		return result;
 	}
 
 }
