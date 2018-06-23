@@ -16,11 +16,28 @@ class ChessComponent extends React.Component {
 		}
 	}
 
+	initBlocks(){
+		return this.state.board.grid.map((row, ridx) => {
+			return row.map((col, cidx) => {
+				let element = null;
+				if (this.state.board.grid[ridx][cidx]){
+					element = <div style={{color:'red'}}>{this.state.board.grid[ridx][cidx].name}</div>
+				}
+
+				return (
+					<div key={ridx + "derp" + cidx} style={this.state.styles.block} row={ridx} col={cidx}>
+						{element}
+					</div>
+				);
+			});
+		});
+	}
+
 	render(){
 		return (
 			<div>
 				<div className="boardContainer" style={this.state.styles.boardContainer}>
-
+					{this.initBlocks()}
 				</div>
 			</div>
 		);

@@ -989,12 +989,40 @@ var ChessComponent = function (_React$Component) {
 	}
 
 	_createClass(ChessComponent, [{
+		key: 'initBlocks',
+		value: function initBlocks() {
+			var _this2 = this;
+
+			return this.state.board.grid.map(function (row, ridx) {
+				return row.map(function (col, cidx) {
+					var element = null;
+					if (_this2.state.board.grid[ridx][cidx]) {
+						element = _react2.default.createElement(
+							'div',
+							{ style: { color: 'red' } },
+							_this2.state.board.grid[ridx][cidx].name
+						);
+					}
+
+					return _react2.default.createElement(
+						'div',
+						{ key: ridx + "derp" + cidx, style: _this2.state.styles.block, row: ridx, col: cidx },
+						element
+					);
+				});
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement('div', { className: 'boardContainer', style: this.state.styles.boardContainer })
+				_react2.default.createElement(
+					'div',
+					{ className: 'boardContainer', style: this.state.styles.boardContainer },
+					this.initBlocks()
+				)
 			);
 		}
 	}]);
@@ -8199,7 +8227,8 @@ var ChessStyles = function () {
 
 				block: {
 					width: '50px',
-					height: '50px'
+					height: '50px',
+					float: 'left'
 				}
 			};
 		}

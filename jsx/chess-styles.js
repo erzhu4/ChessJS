@@ -15,7 +15,8 @@ export default class ChessStyles {
 
 		    block: {
 		        width: '50px',
-		        height: '50px'
+		        height: '50px',
+		        float: 'left'
 		    }
 		};
 	}
