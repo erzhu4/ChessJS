@@ -4,11 +4,11 @@ var path = require('path');
 var reactModule = {
 
     entry: [
-        './assets/jsx/portfolio-react.jsx'
+        './jsx/chess.jsx'
     ],
 
     output: {
-        filename: 'portfolio-react.js',
+        filename: 'chess.js',
         path: path.join(__dirname, '../js')
     },
 
@@ -16,7 +16,7 @@ var reactModule = {
         loaders : [
             {
                 test : /\.jsx?/,
-                loader : 'babel-loader'
+                loader: 'babel-loader'
             }
         ]
     }

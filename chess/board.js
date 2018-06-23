@@ -1,7 +1,16 @@
-class Board {
+import Piece from './piece.js';
+import Bishop from './bishop.js';
+import Pawn from './pawn.js';
+import Queen from './queen.js';
+import King from './king.js';
+import Rook from './rook.js';
+import Knight from './knight.js';
+
+export default class Board {
 
 	constructor(){
 		this.grid = this.initGrid();
+		this.initPieces();
 	}
 
 	initGrid(){

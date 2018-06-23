@@ -1,4 +1,4 @@
-class Piece {
+export default class Piece {
 
 	constructor(x, y, board, params){
 		this.board = board;
