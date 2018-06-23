@@ -51,8 +51,8 @@ class Piece {
 		}
 
 		if (JSON.stringify(this.validMoves()).indexOf(JSON.stringify(location))){
-			this.board[location[0], location[1]] = this;
-			this.board[this.pos[0], this.pos[1]] = null;
+			this.board.grid[location[0]][location[1]] = this;
+			this.board.grid[this.pos[0]][this.pos[1]] = null;
 			this.pos[0] = location[0];
 			this.pos[1] = location[1];
 			return true;
