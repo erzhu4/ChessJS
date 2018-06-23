@@ -995,19 +995,24 @@ var ChessComponent = function (_React$Component) {
 			var _this2 = this;
 
 			return this.state.board.grid.map(function (row, ridx) {
-				return row.map(function (col, cidx) {
+				return row.map(function (gridEl, cidx) {
 					var element = null;
-					if (_this2.state.board.grid[ridx][cidx]) {
+
+					if (gridEl) {
 						element = _react2.default.createElement(
 							'div',
 							{ style: { color: 'red' } },
-							_this2.state.board.grid[ridx][cidx].name
+							gridEl.name
 						);
 					}
 
 					return _react2.default.createElement(
 						'div',
-						{ key: ridx + "derp" + cidx, style: _this2.state.styles.block, row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2) },
+						{ key: ridx + "derp" + cidx,
+							style: _this2.state.styles.block,
+							row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2),
+							className: _this2.state.selectedPiece && _this2.state.selectedPiece == gridEl ? "selected" : null
+						},
 						element
 					);
 				});
@@ -1016,14 +1021,23 @@ var ChessComponent = function (_React$Component) {
 	}, {
 		key: 'blockClick',
 		value: function blockClick(event) {
+			//TODO: validate player first
+
 			var row = parseInt(event.currentTarget.getAttribute("row"));
 			var col = parseInt(event.currentTarget.getAttribute("col"));
+			var elementClickedOn = this.state.board.grid[row][col];
 
-			if (!this.state.selectedPiece) {
+			//Has not seleced a piece or selected another piece of same color
+			if (!this.state.selectedPiece || elementClickedOn && elementClickedOn.color == this.state.selectedPiece.color) {
 				this.setState({
-					selectedPiece: this.state.board.grid[row][col]
+					selectedPiece: elementClickedOn
 				});
 			} else {
+				//clicked the same piece
+				if (this.state.selectedPiece == elementClickedOn) {
+					return;
+				}
+
 				//moved successfully
 				if (this.state.selectedPiece.move([row, col])) {
 					this.setState({
