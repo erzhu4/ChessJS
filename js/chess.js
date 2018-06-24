@@ -278,6 +278,7 @@ var Piece = function () {
 		this.board = board;
 		this.pos = [x, y];
 		this.color = params['color'] ? params['color'] : null;
+		this.imageDirectory = "images/";
 	}
 
 	_createClass(Piece, [{
@@ -980,11 +981,14 @@ var ChessComponent = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (ChessComponent.__proto__ || Object.getPrototypeOf(ChessComponent)).call(this, props));
 
-		var styles = new _chessStyles2.default({ dimension: 400 }).getStyles();
+		var styleClass = new _chessStyles2.default({ dimension: 400 });
 		_this.state = {
-			styles: styles,
+			styles: styleClass.getStyles(),
+			styleClass: styleClass,
 			board: new _board2.default(),
-			selectedPiece: null
+			selectedPiece: null,
+			color1: props.color1 ? props.color1 : "green",
+			color2: props.color2 ? props.color2 : "white"
 		};
 		return _this;
 	}
@@ -994,22 +998,20 @@ var ChessComponent = function (_React$Component) {
 		value: function initBlocks() {
 			var _this2 = this;
 
+			var flag = true;
 			return this.state.board.grid.map(function (row, ridx) {
+				flag = !flag;
 				return row.map(function (gridEl, cidx) {
 					var element = null;
 
 					if (gridEl) {
-						element = _react2.default.createElement(
-							'div',
-							{ style: { color: 'red' } },
-							gridEl.name
-						);
+						element = _react2.default.createElement('img', { style: _this2.state.styles.pieceImage, src: gridEl.image });
 					}
-
+					flag = !flag;
 					return _react2.default.createElement(
 						'div',
 						{ key: ridx + "derp" + cidx,
-							style: _this2.state.styles.block,
+							style: _this2.state.styleClass.getBlockStyles(flag, _this2.state.color1, _this2.state.color2),
 							row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2),
 							className: _this2.state.selectedPiece && _this2.state.selectedPiece == gridEl ? "selected" : null
 						},
@@ -8251,6 +8253,23 @@ var ChessStyles = function () {
 	}
 
 	_createClass(ChessStyles, [{
+		key: 'getBlockStyles',
+		value: function getBlockStyles(flag, color1, color2) {
+			var color = void 0;
+			if (flag) {
+				color = color1;
+			} else {
+				color = color2;
+			}
+
+			return {
+				width: '50px',
+				height: '50px',
+				float: 'left',
+				backgroundColor: color
+			};
+		}
+	}, {
 		key: 'getStyles',
 		value: function getStyles() {
 			return {
@@ -8261,10 +8280,9 @@ var ChessStyles = function () {
 					backgroundSize: 'cover'
 				},
 
-				block: {
-					width: '50px',
-					height: '50px',
-					float: 'left'
+				pieceImage: {
+					width: '100%',
+					height: '100%'
 				}
 			};
 		}
@@ -8425,13 +8443,14 @@ var Bishop = function (_Piece) {
 
 		_this.name = "bishop";
 		_this.dirs = [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(Bishop, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
-			return _get(Bishop.prototype.__proto__ || Object.getPrototypeOf(Bishop.prototype), "validMoves", this).call(this);
+			return _get(Bishop.prototype.__proto__ || Object.getPrototypeOf(Bishop.prototype), 'validMoves', this).call(this);
 		}
 	}]);
 
@@ -8477,11 +8496,12 @@ var Pawn = function (_Piece) {
 
 		_this.name = "pawn";
 		_this.firstMove = true;
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(Pawn, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
 			var _this2 = this;
 
@@ -8514,9 +8534,9 @@ var Pawn = function (_Piece) {
 			});
 		}
 	}, {
-		key: "move",
+		key: 'move',
 		value: function move(location) {
-			var result = _get(Pawn.prototype.__proto__ || Object.getPrototypeOf(Pawn.prototype), "move", this).call(this, location);
+			var result = _get(Pawn.prototype.__proto__ || Object.getPrototypeOf(Pawn.prototype), 'move', this).call(this, location);
 			if (result) {
 				this.firstMove = false;
 			}
@@ -8566,13 +8586,14 @@ var Queen = function (_Piece) {
 
 		_this.name = "queen";
 		_this.dirs = [[1, 1], [-1, 1], [-1, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [0, -1]];
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(Queen, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
-			return _get(Queen.prototype.__proto__ || Object.getPrototypeOf(Queen.prototype), "validMoves", this).call(this);
+			return _get(Queen.prototype.__proto__ || Object.getPrototypeOf(Queen.prototype), 'validMoves', this).call(this);
 		}
 	}]);
 
@@ -8615,11 +8636,12 @@ var King = function (_Piece) {
 		var _this = _possibleConstructorReturn(this, (King.__proto__ || Object.getPrototypeOf(King)).call(this, x, y, board, params));
 
 		_this.name = "king";
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(King, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
 			var _this2 = this;
 
@@ -8672,13 +8694,14 @@ var Rook = function (_Piece) {
 
 		_this.name = "rook";
 		_this.dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(Rook, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
-			return _get(Rook.prototype.__proto__ || Object.getPrototypeOf(Rook.prototype), "validMoves", this).call(this);
+			return _get(Rook.prototype.__proto__ || Object.getPrototypeOf(Rook.prototype), 'validMoves', this).call(this);
 		}
 	}]);
 
@@ -8721,11 +8744,12 @@ var Knight = function (_Piece) {
 		var _this = _possibleConstructorReturn(this, (Knight.__proto__ || Object.getPrototypeOf(Knight)).call(this, x, y, board, params));
 
 		_this.name = "knight";
+		_this.image = params['customImage'] ? _this.imageDirectory + params['customImage'] : _this.imageDirectory + _this.color + "_" + _this.name + ".png";
 		return _this;
 	}
 
 	_createClass(Knight, [{
-		key: "validMoves",
+		key: 'validMoves',
 		value: function validMoves() {
 			var _this2 = this;
 

@@ -6,6 +6,7 @@ export default class Pawn extends Piece {
 		super(x, y, board, params);
 		this.name = "pawn";
 		this.firstMove = true;
+		this.image = params['customImage'] ? this.imageDirectory + params['customImage'] : this.imageDirectory + this.color + "_" + this.name + ".png";
 	}
 
 	validMoves(){

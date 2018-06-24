@@ -5,6 +5,7 @@ export default class King extends Piece {
 	constructor(x, y, board, params){
 		super(x, y, board, params);
 		this.name = "king";
+		this.image = params['customImage'] ? this.imageDirectory + params['customImage'] : this.imageDirectory + this.color + "_" + this.name + ".png";
 	}
 
 	validMoves(){

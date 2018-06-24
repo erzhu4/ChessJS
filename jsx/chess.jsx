@@ -9,30 +9,33 @@ class ChessComponent extends React.Component {
 	constructor(props){
 		super(props);
 
-		var styles = new ChessStyles({dimension: 400}).getStyles();
+		var styleClass = new ChessStyles({dimension: 400});
 		this.state = {
-			styles: styles,
+			styles: styleClass.getStyles(),
+			styleClass: styleClass,
 			board: new ChessBoard(),
-			selectedPiece: null
+			selectedPiece: null,
+			color1 : props.color1 ? props.color1 : "green",
+			color2 : props.color2 ? props.color2 : "white"
 		}
 	}
 
 	initBlocks(){
+		var flag = true;
 		return this.state.board.grid.map((row, ridx) => {
+			flag = !flag;
 			return row.map((gridEl, cidx) => {
 				let element = null;
 
 				if (gridEl){
 					element = (
-						<div style={{color:'red'}}>
-							{gridEl.name}
-						</div>
+						<img style={this.state.styles.pieceImage} src={gridEl.image} />
 					);
 				}
-
+				flag = !flag;
 				return (
 					<div key={ridx + "derp" + cidx} 
-							style={this.state.styles.block} 
+							style={this.state.styleClass.getBlockStyles(flag, this.state.color1, this.state.color2)} 
 							row={ridx} col={cidx} onClick={this.blockClick.bind(this)}
 							className={this.state.selectedPiece && this.state.selectedPiece == gridEl ? "selected" : null}
 						>

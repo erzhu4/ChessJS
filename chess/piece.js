@@ -4,6 +4,7 @@ export default class Piece {
 		this.board = board;
 		this.pos = [x, y];
 		this.color = params['color'] ? params['color'] : null;
+		this.imageDirectory = "images/";
 	}
 
 	checkMove(loc){

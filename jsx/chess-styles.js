@@ -4,6 +4,22 @@ export default class ChessStyles {
 		this.dim = params['dimension']
 	}
 
+	getBlockStyles(flag, color1, color2){
+		let color;
+		if (flag){
+			color = color1;
+		} else {
+			color = color2;
+		}
+
+		return {
+	        width: '50px',
+	        height: '50px',
+	        float: 'left',
+	        backgroundColor: color
+		}
+	}
+
 	getStyles(){
 		return {
 		    boardContainer: {
@@ -13,10 +29,9 @@ export default class ChessStyles {
 		        backgroundSize: 'cover'
 		    },
 
-		    block: {
-		        width: '50px',
-		        height: '50px',
-		        float: 'left'
+		    pieceImage: {
+	    	    width: '100%',
+    			height: '100%'
 		    }
 		};
 	}

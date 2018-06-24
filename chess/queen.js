@@ -15,6 +15,7 @@ export default class Queen extends Piece {
 			[-1, 0],
 			[0, -1]
 		];
+		this.image = params['customImage'] ? this.imageDirectory + params['customImage'] : this.imageDirectory + this.color + "_" + this.name + ".png";
 	}
 
 	validMoves(){
