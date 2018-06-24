@@ -23,10 +23,8 @@ export default class ChessStyles {
 	getStyles(){
 		return {
 		    boardContainer: {
-		        backgroundImage: 'url("images/chessboard.jpg")',
 		        width: '400px',
-		        height: '400px',
-		        backgroundSize: 'cover'
+		        height: '400px'
 		    },
 
 		    pieceImage: {
