@@ -37,6 +37,9 @@ export default class Piece {
 					break;
 				}
 				arr.push(move);
+				if (this.board.grid[move[0]][move[1]]){
+					break;
+				}
 				x++;
 			}
 		}

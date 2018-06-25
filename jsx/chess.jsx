@@ -20,7 +20,23 @@ class ChessComponent extends React.Component {
 		}
 	}
 
-	initBlocks(){
+	getClassNameForBlock(block, ridx, cidx){
+
+		let className = "";
+
+		let selectedPiece = this.state.selectedPiece;
+
+		if (selectedPiece && 
+			(selectedPiece == block || JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1)
+		){
+			className += "highlighted"
+		}
+
+		return className;
+
+	}
+
+	getBlocks(){
 		var flag = true;
 		return this.state.board.grid.map((row, ridx) => {
 			flag = !flag;
@@ -37,7 +53,7 @@ class ChessComponent extends React.Component {
 					<div key={ridx + "derp" + cidx} 
 							style={this.state.styleClass.getBlockStyles(flag, this.state.color1, this.state.color2)} 
 							row={ridx} col={cidx} onClick={this.blockClick.bind(this)}
-							className={this.state.selectedPiece && this.state.selectedPiece == gridEl ? "selected" : null}
+							className={this.getClassNameForBlock(gridEl, ridx, cidx)}
 						>
 							{element}
 					</div>
@@ -79,7 +95,7 @@ class ChessComponent extends React.Component {
 		return (
 			<div>
 				<div className="boardContainer" style={this.state.styles.boardContainer}>
-					{this.initBlocks()}
+					{this.getBlocks()}
 				</div>
 			</div>
 		);

@@ -311,6 +311,9 @@ var Piece = function () {
 						break;
 					}
 					arr.push(move);
+					if (this.board.grid[move[0]][move[1]]) {
+						break;
+					}
 					x++;
 				}
 			}
@@ -994,8 +997,22 @@ var ChessComponent = function (_React$Component) {
 	}
 
 	_createClass(ChessComponent, [{
-		key: 'initBlocks',
-		value: function initBlocks() {
+		key: 'getClassNameForBlock',
+		value: function getClassNameForBlock(block, ridx, cidx) {
+
+			var className = "";
+
+			var selectedPiece = this.state.selectedPiece;
+
+			if (selectedPiece && (selectedPiece == block || JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1)) {
+				className += "highlighted";
+			}
+
+			return className;
+		}
+	}, {
+		key: 'getBlocks',
+		value: function getBlocks() {
 			var _this2 = this;
 
 			var flag = true;
@@ -1013,7 +1030,7 @@ var ChessComponent = function (_React$Component) {
 						{ key: ridx + "derp" + cidx,
 							style: _this2.state.styleClass.getBlockStyles(flag, _this2.state.color1, _this2.state.color2),
 							row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2),
-							className: _this2.state.selectedPiece && _this2.state.selectedPiece == gridEl ? "selected" : null
+							className: _this2.getClassNameForBlock(gridEl, ridx, cidx)
 						},
 						element
 					);
@@ -1059,7 +1076,7 @@ var ChessComponent = function (_React$Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'boardContainer', style: this.state.styles.boardContainer },
-					this.initBlocks()
+					this.getBlocks()
 				)
 			);
 		}
