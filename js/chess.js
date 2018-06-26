@@ -1004,8 +1004,9 @@ var ChessComponent = function (_React$Component) {
 
 			var selectedPiece = this.state.selectedPiece;
 
-			if (selectedPiece && (selectedPiece == block || JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1)) {
-				className += "highlighted";
+			if (selectedPiece) {
+				if (selectedPiece == block) className += "highlighted ";
+				if (JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1) className += "moveable ";
 			}
 
 			return className;
@@ -8397,16 +8398,16 @@ var Board = function () {
 			this.grid[0][4] = new _king2.default(0, 4, this, { color: "black" });
 
 			//set bishops
-			this.grid[7][2] = new _knight2.default(7, 2, this, { color: "white" });
-			this.grid[7][5] = new _knight2.default(7, 5, this, { color: "white" });
-			this.grid[0][2] = new _knight2.default(0, 2, this, { color: "black" });
-			this.grid[0][5] = new _knight2.default(0, 5, this, { color: "black" });
+			this.grid[7][2] = new _bishop2.default(7, 2, this, { color: "white" });
+			this.grid[7][5] = new _bishop2.default(7, 5, this, { color: "white" });
+			this.grid[0][2] = new _bishop2.default(0, 2, this, { color: "black" });
+			this.grid[0][5] = new _bishop2.default(0, 5, this, { color: "black" });
 
 			//set knights
-			this.grid[7][1] = new _bishop2.default(7, 1, this, { color: "white" });
-			this.grid[7][6] = new _bishop2.default(7, 6, this, { color: "white" });
-			this.grid[0][1] = new _bishop2.default(0, 1, this, { color: "black" });
-			this.grid[0][6] = new _bishop2.default(0, 6, this, { color: "black" });
+			this.grid[7][1] = new _knight2.default(7, 1, this, { color: "white" });
+			this.grid[7][6] = new _knight2.default(7, 6, this, { color: "white" });
+			this.grid[0][1] = new _knight2.default(0, 1, this, { color: "black" });
+			this.grid[0][6] = new _knight2.default(0, 6, this, { color: "black" });
 
 			//set rooks
 			this.grid[7][0] = new _rook2.default(7, 0, this, { color: "white" });
@@ -8542,8 +8543,13 @@ var Pawn = function (_Piece) {
 				if (!_this2.checkMove(move)) {
 					return false;
 				}
+				//diagnal kill move
 				if (move[1] != _this2.pos[1]) {
 					return _this2.board.grid[move[0]][move[1]] && _this2.board.grid[move[0]][move[1]].color != _this2.color;
+				}
+				//straight non kill move
+				if (move[1] == _this2.pos[1]) {
+					return !_this2.board.grid[move[0]][move[1]];
 				}
 				return true;
 			});

@@ -26,10 +26,9 @@ class ChessComponent extends React.Component {
 
 		let selectedPiece = this.state.selectedPiece;
 
-		if (selectedPiece && 
-			(selectedPiece == block || JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1)
-		){
-			className += "highlighted"
+		if (selectedPiece){
+			if (selectedPiece == block) className += "highlighted ";
+			if (JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1) className += "moveable ";
 		}
 
 		return className;

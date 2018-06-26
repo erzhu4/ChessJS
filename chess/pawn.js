@@ -32,8 +32,13 @@ export default class Pawn extends Piece {
 			if (!this.checkMove(move)){
 				return false;
 			}
+			//diagnal kill move
 			if (move[1] != this.pos[1]){
 				return this.board.grid[move[0]][move[1]] && this.board.grid[move[0]][move[1]].color != this.color;
+			}
+			//straight non kill move
+			if (move[1] == this.pos[1]){
+				return !this.board.grid[move[0]][move[1]];
 			}
 			return true;
 		});

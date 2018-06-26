@@ -44,16 +44,16 @@ export default class Board {
 		this.grid[0][4] = new King(0, 4, this, {color: "black"});
 
 		//set bishops
-		this.grid[7][2] = new Knight(7, 2, this, {color: "white"});
-		this.grid[7][5] = new Knight(7, 5, this, {color: "white"});
-		this.grid[0][2] = new Knight(0, 2, this, {color: "black"});
-		this.grid[0][5] = new Knight(0, 5, this, {color: "black"});
+		this.grid[7][2] = new Bishop(7, 2, this, {color: "white"});
+		this.grid[7][5] = new Bishop(7, 5, this, {color: "white"});
+		this.grid[0][2] = new Bishop(0, 2, this, {color: "black"});
+		this.grid[0][5] = new Bishop(0, 5, this, {color: "black"});
 
 		//set knights
-		this.grid[7][1] = new Bishop(7, 1, this, {color: "white"});
-		this.grid[7][6] = new Bishop(7, 6, this, {color: "white"});
-		this.grid[0][1] = new Bishop(0, 1, this, {color: "black"});
-		this.grid[0][6] = new Bishop(0, 6, this, {color: "black"});
+		this.grid[7][1] = new Knight(7, 1, this, {color: "white"});
+		this.grid[7][6] = new Knight(7, 6, this, {color: "white"});
+		this.grid[0][1] = new Knight(0, 1, this, {color: "black"});
+		this.grid[0][6] = new Knight(0, 6, this, {color: "black"});
 
 		//set rooks
 		this.grid[7][0] = new Rook(7, 0, this, {color: "white"});
