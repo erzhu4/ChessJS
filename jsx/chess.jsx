@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import ChessStyles from './chess-styles.js'
 import ChessBoard from '../chess/board.js';
 
-class ChessComponent extends React.Component {
+export default class ChessComponent extends React.Component {
 
 	constructor(props){
 		super(props);
@@ -63,10 +62,18 @@ class ChessComponent extends React.Component {
 
 	blockClick(event){
 		//TODO: validate player first
+		if (this.props.currentPlayer != this.props.player){
+			return;
+		}
 
 		let row = parseInt(event.currentTarget.getAttribute("row"));
 		let col = parseInt(event.currentTarget.getAttribute("col"));
 		var elementClickedOn = this.state.board.grid[row][col];
+
+		//validate correct colored piece clicked on
+		if (!this.state.selectedPiece && elementClickedOn && elementClickedOn.color != this.props.player.color){
+			return;
+		}
 
 		//Has not seleced a piece or selected another piece of same color
 		if (!this.state.selectedPiece || (elementClickedOn && elementClickedOn.color == this.state.selectedPiece.color)){
@@ -84,6 +91,7 @@ class ChessComponent extends React.Component {
 				this.setState({
 					selectedPiece: null
 				});
+				this.props.moveSuccessful([row, col]);
 			} else {
 				alert("move is illegal");
 			}
@@ -100,8 +108,4 @@ class ChessComponent extends React.Component {
 		);
 	}
 
-}
-
-if (document.getElementById('chess')) {
-    ReactDOM.render(<ChessComponent />, document.getElementById('chess'));
 }

@@ -4,7 +4,7 @@ var path = require('path');
 var reactModule = {
 
     entry: [
-        './jsx/chess.jsx'
+        './main-chess.jsx'
     ],
 
     output: {

@@ -393,6 +393,20 @@ module.exports = emptyFunction;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(15);
+} else {
+  module.exports = __webpack_require__(16);
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /*
 object-assign
 (c) Sindre Sorhus
@@ -485,7 +499,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -545,7 +559,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -566,20 +580,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(15);
-} else {
-  module.exports = __webpack_require__(16);
-}
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -952,7 +952,7 @@ module.exports = __webpack_require__(14);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -960,13 +960,13 @@ var _reactDom = __webpack_require__(18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chessStyles = __webpack_require__(27);
+var _ChessPlayer = __webpack_require__(27);
 
-var _chessStyles2 = _interopRequireDefault(_chessStyles);
+var _ChessPlayer2 = _interopRequireDefault(_ChessPlayer);
 
-var _board = __webpack_require__(28);
+var _chess = __webpack_require__(28);
 
-var _board2 = _interopRequireDefault(_board);
+var _chess2 = _interopRequireDefault(_chess);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -976,96 +976,35 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ChessComponent = function (_React$Component) {
-	_inherits(ChessComponent, _React$Component);
+var Chess = function (_React$Component) {
+	_inherits(Chess, _React$Component);
 
-	function ChessComponent(props) {
-		_classCallCheck(this, ChessComponent);
+	function Chess(props) {
+		_classCallCheck(this, Chess);
 
-		var _this = _possibleConstructorReturn(this, (ChessComponent.__proto__ || Object.getPrototypeOf(ChessComponent)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Chess.__proto__ || Object.getPrototypeOf(Chess)).call(this, props));
 
-		var styleClass = new _chessStyles2.default({ dimension: 400 });
 		_this.state = {
-			styles: styleClass.getStyles(),
-			styleClass: styleClass,
-			board: new _board2.default(),
-			selectedPiece: null,
-			color1: props.color1 ? props.color1 : "green",
-			color2: props.color2 ? props.color2 : "white"
+			player1: new _ChessPlayer2.default("white"),
+			player2: new _ChessPlayer2.default("black"),
+			currentPlayer: null
 		};
+
+		_this.state.currentPlayer = _this.state.player1;
 		return _this;
 	}
 
-	_createClass(ChessComponent, [{
-		key: 'getClassNameForBlock',
-		value: function getClassNameForBlock(block, ridx, cidx) {
-
-			var className = "";
-
-			var selectedPiece = this.state.selectedPiece;
-
-			if (selectedPiece) {
-				if (selectedPiece == block) className += "highlighted ";
-				if (JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1) className += "moveable ";
-			}
-
-			return className;
-		}
-	}, {
-		key: 'getBlocks',
-		value: function getBlocks() {
-			var _this2 = this;
-
-			var flag = true;
-			return this.state.board.grid.map(function (row, ridx) {
-				flag = !flag;
-				return row.map(function (gridEl, cidx) {
-					var element = null;
-
-					if (gridEl) {
-						element = _react2.default.createElement('img', { style: _this2.state.styles.pieceImage, src: gridEl.image });
-					}
-					flag = !flag;
-					return _react2.default.createElement(
-						'div',
-						{ key: ridx + "derp" + cidx,
-							style: _this2.state.styleClass.getBlockStyles(flag, _this2.state.color1, _this2.state.color2),
-							row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2),
-							className: _this2.getClassNameForBlock(gridEl, ridx, cidx)
-						},
-						element
-					);
-				});
-			});
-		}
-	}, {
-		key: 'blockClick',
-		value: function blockClick(event) {
-			//TODO: validate player first
-
-			var row = parseInt(event.currentTarget.getAttribute("row"));
-			var col = parseInt(event.currentTarget.getAttribute("col"));
-			var elementClickedOn = this.state.board.grid[row][col];
-
-			//Has not seleced a piece or selected another piece of same color
-			if (!this.state.selectedPiece || elementClickedOn && elementClickedOn.color == this.state.selectedPiece.color) {
+	_createClass(Chess, [{
+		key: 'moveSuccessful',
+		value: function moveSuccessful(params) {
+			if (this.state.currentPlayer == this.state.player1) {
 				this.setState({
-					selectedPiece: elementClickedOn
+					currentPlayer: this.state.player2
 				});
 			} else {
-				//clicked the same piece
-				if (this.state.selectedPiece == elementClickedOn) {
-					return;
-				}
-
-				//moved successfully
-				if (this.state.selectedPiece.move([row, col])) {
-					this.setState({
-						selectedPiece: null
-					});
-				} else {
-					alert("move is illegal");
-				}
+				this.setState({
+					currentPlayer: this.state.player1
+				});
 			}
 		}
 	}, {
@@ -1074,20 +1013,16 @@ var ChessComponent = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'div',
-					{ className: 'boardContainer', style: this.state.styles.boardContainer },
-					this.getBlocks()
-				)
+				_react2.default.createElement(_chess2.default, { currentPlayer: this.state.currentPlayer, player: this.state.currentPlayer, moveSuccessful: this.moveSuccessful.bind(this) })
 			);
 		}
 	}]);
 
-	return ChessComponent;
+	return Chess;
 }(_react2.default.Component);
 
 if (document.getElementById('chess')) {
-	_reactDom2.default.render(_react2.default.createElement(ChessComponent, null), document.getElementById('chess'));
+	_reactDom2.default.render(_react2.default.createElement(Chess, null), document.getElementById('chess'));
 }
 
 /***/ }),
@@ -1108,9 +1043,9 @@ if (document.getElementById('chess')) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var k = __webpack_require__(3),
-    n = __webpack_require__(4),
-    p = __webpack_require__(5),
+var k = __webpack_require__(4),
+    n = __webpack_require__(5),
+    p = __webpack_require__(6),
     q = __webpack_require__(2),
     r = "function" === typeof Symbol && Symbol.for,
     t = r ? Symbol.for("react.element") : 60103,
@@ -1248,9 +1183,9 @@ if (process.env.NODE_ENV !== "production") {
   (function () {
     'use strict';
 
-    var _assign = __webpack_require__(3);
-    var invariant = __webpack_require__(4);
-    var emptyObject = __webpack_require__(5);
+    var _assign = __webpack_require__(4);
+    var invariant = __webpack_require__(5);
+    var emptyObject = __webpack_require__(6);
     var warning = __webpack_require__(7);
     var emptyFunction = __webpack_require__(2);
     var checkPropTypes = __webpack_require__(8);
@@ -2796,15 +2731,15 @@ if (process.env.NODE_ENV === 'production') {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var aa = __webpack_require__(4),
-    ba = __webpack_require__(6),
+var aa = __webpack_require__(5),
+    ba = __webpack_require__(3),
     m = __webpack_require__(9),
-    p = __webpack_require__(3),
+    p = __webpack_require__(4),
     v = __webpack_require__(2),
     da = __webpack_require__(10),
     ea = __webpack_require__(11),
     fa = __webpack_require__(12),
-    ha = __webpack_require__(5);
+    ha = __webpack_require__(6);
 function A(a) {
   for (var b = arguments.length - 1, c = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, d = 0; d < b; d++) {
     c += "&args[]=" + encodeURIComponent(arguments[d + 1]);
@@ -4938,7 +4873,7 @@ module.exports = isNode;
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var invariant=__webpack_require__(4);var React=__webpack_require__(6);var warning=__webpack_require__(7);var ExecutionEnvironment=__webpack_require__(9);var _assign=__webpack_require__(3);var emptyFunction=__webpack_require__(2);var checkPropTypes=__webpack_require__(8);var getActiveElement=__webpack_require__(10);var shallowEqual=__webpack_require__(11);var containsNode=__webpack_require__(12);var emptyObject=__webpack_require__(5);var hyphenateStyleName=__webpack_require__(23);var camelizeStyleName=__webpack_require__(25);// Relying on the `invariant()` implementation lets us
+ */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var invariant=__webpack_require__(5);var React=__webpack_require__(3);var warning=__webpack_require__(7);var ExecutionEnvironment=__webpack_require__(9);var _assign=__webpack_require__(4);var emptyFunction=__webpack_require__(2);var checkPropTypes=__webpack_require__(8);var getActiveElement=__webpack_require__(10);var shallowEqual=__webpack_require__(11);var containsNode=__webpack_require__(12);var emptyObject=__webpack_require__(6);var hyphenateStyleName=__webpack_require__(23);var camelizeStyleName=__webpack_require__(25);// Relying on the `invariant()` implementation lets us
 // have preserve the format and params in the www builds.
 !React?invariant(false,'ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.'):void 0;var invokeGuardedCallback=function invokeGuardedCallback(name,func,context,a,b,c,d,e,f){this._hasCaughtError=false;this._caughtError=null;var funcArgs=Array.prototype.slice.call(arguments,3);try{func.apply(context,funcArgs);}catch(error){this._caughtError=error;this._hasCaughtError=true;}};{// In DEV mode, we swap out invokeGuardedCallback for a special version
 // that plays more nicely with the browser's DevTools. The idea is to preserve
@@ -8259,6 +8194,181 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ChessPlayer = function ChessPlayer(color) {
+	_classCallCheck(this, ChessPlayer);
+
+	this.color = color;
+};
+
+exports.default = ChessPlayer;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _chessStyles = __webpack_require__(29);
+
+var _chessStyles2 = _interopRequireDefault(_chessStyles);
+
+var _board = __webpack_require__(30);
+
+var _board2 = _interopRequireDefault(_board);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ChessComponent = function (_React$Component) {
+	_inherits(ChessComponent, _React$Component);
+
+	function ChessComponent(props) {
+		_classCallCheck(this, ChessComponent);
+
+		var _this = _possibleConstructorReturn(this, (ChessComponent.__proto__ || Object.getPrototypeOf(ChessComponent)).call(this, props));
+
+		var styleClass = new _chessStyles2.default({ dimension: 400 });
+		_this.state = {
+			styles: styleClass.getStyles(),
+			styleClass: styleClass,
+			board: new _board2.default(),
+			selectedPiece: null,
+			color1: props.color1 ? props.color1 : "green",
+			color2: props.color2 ? props.color2 : "white"
+		};
+		return _this;
+	}
+
+	_createClass(ChessComponent, [{
+		key: 'getClassNameForBlock',
+		value: function getClassNameForBlock(block, ridx, cidx) {
+
+			var className = "";
+
+			var selectedPiece = this.state.selectedPiece;
+
+			if (selectedPiece) {
+				if (selectedPiece == block) className += "highlighted ";
+				if (JSON.stringify(selectedPiece.validMoves()).indexOf(JSON.stringify([ridx, cidx])) != -1) className += "moveable ";
+			}
+
+			return className;
+		}
+	}, {
+		key: 'getBlocks',
+		value: function getBlocks() {
+			var _this2 = this;
+
+			var flag = true;
+			return this.state.board.grid.map(function (row, ridx) {
+				flag = !flag;
+				return row.map(function (gridEl, cidx) {
+					var element = null;
+
+					if (gridEl) {
+						element = _react2.default.createElement('img', { style: _this2.state.styles.pieceImage, src: gridEl.image });
+					}
+					flag = !flag;
+					return _react2.default.createElement(
+						'div',
+						{ key: ridx + "derp" + cidx,
+							style: _this2.state.styleClass.getBlockStyles(flag, _this2.state.color1, _this2.state.color2),
+							row: ridx, col: cidx, onClick: _this2.blockClick.bind(_this2),
+							className: _this2.getClassNameForBlock(gridEl, ridx, cidx)
+						},
+						element
+					);
+				});
+			});
+		}
+	}, {
+		key: 'blockClick',
+		value: function blockClick(event) {
+			//TODO: validate player first
+			if (this.props.currentPlayer != this.props.player) {
+				return;
+			}
+
+			var row = parseInt(event.currentTarget.getAttribute("row"));
+			var col = parseInt(event.currentTarget.getAttribute("col"));
+			var elementClickedOn = this.state.board.grid[row][col];
+
+			//validate correct colored piece clicked on
+			if (!this.state.selectedPiece && elementClickedOn && elementClickedOn.color != this.props.player.color) {
+				return;
+			}
+
+			//Has not seleced a piece or selected another piece of same color
+			if (!this.state.selectedPiece || elementClickedOn && elementClickedOn.color == this.state.selectedPiece.color) {
+				this.setState({
+					selectedPiece: elementClickedOn
+				});
+			} else {
+				//clicked the same piece
+				if (this.state.selectedPiece == elementClickedOn) {
+					return;
+				}
+
+				//moved successfully
+				if (this.state.selectedPiece.move([row, col])) {
+					this.setState({
+						selectedPiece: null
+					});
+					this.props.moveSuccessful([row, col]);
+				} else {
+					alert("move is illegal");
+				}
+			}
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'div',
+					{ className: 'boardContainer', style: this.state.styles.boardContainer },
+					this.getBlocks()
+				)
+			);
+		}
+	}]);
+
+	return ChessComponent;
+}(_react2.default.Component);
+
+exports.default = ChessComponent;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8310,7 +8420,7 @@ var ChessStyles = function () {
 exports.default = ChessStyles;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8326,27 +8436,27 @@ var _piece = __webpack_require__(1);
 
 var _piece2 = _interopRequireDefault(_piece);
 
-var _bishop = __webpack_require__(29);
+var _bishop = __webpack_require__(31);
 
 var _bishop2 = _interopRequireDefault(_bishop);
 
-var _pawn = __webpack_require__(30);
+var _pawn = __webpack_require__(32);
 
 var _pawn2 = _interopRequireDefault(_pawn);
 
-var _queen = __webpack_require__(31);
+var _queen = __webpack_require__(33);
 
 var _queen2 = _interopRequireDefault(_queen);
 
-var _king = __webpack_require__(32);
+var _king = __webpack_require__(34);
 
 var _king2 = _interopRequireDefault(_king);
 
-var _rook = __webpack_require__(33);
+var _rook = __webpack_require__(35);
 
 var _rook2 = _interopRequireDefault(_rook);
 
-var _knight = __webpack_require__(34);
+var _knight = __webpack_require__(36);
 
 var _knight2 = _interopRequireDefault(_knight);
 
@@ -8423,7 +8533,7 @@ var Board = function () {
 exports.default = Board;
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8476,7 +8586,7 @@ var Bishop = function (_Piece) {
 exports.default = Bishop;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8571,7 +8681,7 @@ var Pawn = function (_Piece) {
 exports.default = Pawn;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8624,7 +8734,7 @@ var Queen = function (_Piece) {
 exports.default = Queen;
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8679,7 +8789,7 @@ var King = function (_Piece) {
 exports.default = King;
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8732,7 +8842,7 @@ var Rook = function (_Piece) {
 exports.default = Rook;
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
