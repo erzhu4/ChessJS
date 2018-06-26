@@ -16,14 +16,14 @@ export default class Pawn extends Piece {
 			possibleMoves.push([this.pos[0] - 1, this.pos[1]]);
 			possibleMoves.push([this.pos[0] - 1, this.pos[1] - 1]);
 			possibleMoves.push([this.pos[0] - 1, this.pos[1] + 1]);
-			if (this.firstMove){
+			if (this.firstMove&& this.checkMove([this.pos[0] - 1, this.pos[1]]) ){
 				possibleMoves.push([this.pos[0] - 2, this.pos[1]]);
 			}
 		} else if (this.color == "black"){
 			possibleMoves.push([this.pos[0] + 1, this.pos[1]]);
 			possibleMoves.push([this.pos[0] + 1, this.pos[1] - 1]);
 			possibleMoves.push([this.pos[0] + 1, this.pos[1] + 1]);
-			if (this.firstMove){
+			if (this.firstMove && this.checkMove([this.pos[0] + 1, this.pos[1]])){
 				possibleMoves.push([this.pos[0] + 2, this.pos[1]]);
 			}
 		}
