@@ -61,18 +61,19 @@ export default class ChessComponent extends React.Component {
 	}
 
 	blockClick(event){
-		//TODO: validate player first
-		if (this.props.currentPlayer != this.props.player){
-			return;
-		}
 
 		let row = parseInt(event.currentTarget.getAttribute("row"));
 		let col = parseInt(event.currentTarget.getAttribute("col"));
 		var elementClickedOn = this.state.board.grid[row][col];
 
-		//validate correct colored piece clicked on
-		if (!this.state.selectedPiece && elementClickedOn && elementClickedOn.color != this.props.player.color){
-			return;
+		//validate current player and correct colored piece clicked on
+		if (this.props.currentPlayer){
+			if (this.props.currentPlayer != this.props.player){
+				return;
+			}
+			if (!this.state.selectedPiece && elementClickedOn && elementClickedOn.color != this.props.player.color){
+				return;
+			}
 		}
 
 		//Has not seleced a piece or selected another piece of same color
