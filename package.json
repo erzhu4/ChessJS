@@ -1,11 +1,13 @@
 {
-  "name": "zChessJS",
+  "name": "ez-chess",
   "version": "0.0.1",
   "main": "js/chess.js",
   "description": "Chess",
   "scripts": {
     "dev": "webpack --config=webpack/webpack.chess.config.js",
-    "prod": "webpack --config=webpack/webpack.chess.config.js -p"
+    "prod": "webpack --config=webpack/webpack.chess.config.js -p",
+    "pub": "webpack --config=webpack/webpack.pub.config.js -p",
+    "build": "webpack"
   },
   "dependencies": {
     "axios": "^0.15.3",

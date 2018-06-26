@@ -2,3 +2,7 @@ src
 demo
 .babelrc
 /webpack/webpack.chess.config.js
+/webpack/webpack.pub.config.js
+webpack.config.js
+/jsx/*
+/chess/*
