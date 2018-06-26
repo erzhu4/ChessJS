@@ -94,7 +94,9 @@ export default class ChessComponent extends React.Component {
 				});
 				this.props.moveSuccessful([row, col]);
 			} else {
-				alert("move is illegal");
+				this.setState({
+					selectedPiece: null
+				});
 			}
 		}
 	}

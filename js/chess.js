@@ -8335,7 +8335,9 @@ var ChessComponent = function (_React$Component) {
 					});
 					this.props.moveSuccessful([row, col]);
 				} else {
-					alert("move is illegal");
+					this.setState({
+						selectedPiece: null
+					});
 				}
 			}
 		}
