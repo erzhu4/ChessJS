@@ -1,8 +1,10 @@
 src
 demo
 .babelrc
-/webpack/webpack.chess.config.js
-/webpack/webpack.pub.config.js
+/webpack/*
 webpack.config.js
 /jsx/*
 /chess/*
+/node_modules
+main-chess.jsx
+index.html
