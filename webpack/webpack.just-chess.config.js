@@ -4,11 +4,11 @@ var path = require('path');
 var reactModule = {
 
     entry: [
-        './chess/board.js'
+        './index.js'
     ],
 
     output: {
-        filename: 'chess.js',
+        filename: 'index.js',
         path: path.join(__dirname, '../js')
     },
 

@@ -6,7 +6,7 @@ import King from './king.js';
 import Rook from './rook.js';
 import Knight from './knight.js';
 
-export default class Board {
+export default class Chess {
 
 	constructor(){
 		this.grid = this.initGrid();
