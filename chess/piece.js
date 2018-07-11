@@ -1,4 +1,4 @@
-export default class Piece {
+module.exports = class Piece {
 
 	constructor(x, y, board, params){
 		this.board = board;

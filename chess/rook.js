@@ -1,6 +1,6 @@
-import Piece from './piece.js';
+var Piece = require('./piece.js');
 
-export default class Rook extends Piece {
+module.exports = class Rook extends Piece {
 
 	constructor(x, y, board, params){
 		super(x, y, board, params);

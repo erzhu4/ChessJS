@@ -1,6 +1,6 @@
-import Piece from './piece.js';
+var Piece = require('./piece.js');
 
-export default class Bishop extends Piece {
+module.exports = class Bishop extends Piece {
 
 	constructor(x, y, board, params){
 		super(x, y, board, params);

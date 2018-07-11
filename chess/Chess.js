@@ -1,12 +1,11 @@
-import Piece from './piece.js';
-import Bishop from './bishop.js';
-import Pawn from './pawn.js';
-import Queen from './queen.js';
-import King from './king.js';
-import Rook from './rook.js';
-import Knight from './knight.js';
+var Bishop = require('./bishop.js');
+var Pawn = require('./pawn.js');
+var Queen = require('./queen.js');
+var King = require('./king.js');
+var Rook = require('./rook.js');
+var Knight = require('./knight.js');
 
-export default class Chess {
+module.exports = class Chess {
 
 	constructor(){
 		this.grid = this.initGrid();

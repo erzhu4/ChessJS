@@ -1,6 +1,6 @@
-import Piece from './piece.js';
+var Piece = require('./piece.js');
 
-export default class Pawn extends Piece {
+module.exports = class Pawn extends Piece {
 
 	constructor(x, y, board, params){
 		super(x, y, board, params);
