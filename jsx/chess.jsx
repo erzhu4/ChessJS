@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ChessStyles from './chess-styles.js'
-import ChessBoard from '../chess/board.js';
+import {Board} from '../js/chess.js';
 
 export default class ChessComponent extends React.Component {
 
@@ -12,7 +12,7 @@ export default class ChessComponent extends React.Component {
 		this.state = {
 			styles: styleClass.getStyles(),
 			styleClass: styleClass,
-			board: new ChessBoard(),
+			board: new Board(),
 			selectedPiece: null,
 			color1 : props.color1 ? props.color1 : "green",
 			color2 : props.color2 ? props.color2 : "white"

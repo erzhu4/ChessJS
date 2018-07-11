@@ -4,7 +4,7 @@ var path = require('path');
 var reactModule = {
 
     entry: [
-        './chess/just-chess.js'
+        './chess/board.js'
     ],
 
     output: {

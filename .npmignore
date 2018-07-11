@@ -4,7 +4,7 @@ demo
 /webpack/*
 webpack.config.js
 /jsx/*
-/chess/*
+/js/*
 /node_modules
 main-chess.jsx
 index.html
